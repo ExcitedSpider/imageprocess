@@ -14,7 +14,7 @@
             <label for="name">照片url：</label><br>
             <input type="text" name="url" id="url" required class="formItem">
         </div>
-        <div style="display: flex;">
+        <div style="display: flex;flex-wrap: wrap;justify-content: space-between;">
             <div>
                 <h2>大小调整</h2>
                 <div>
@@ -84,11 +84,12 @@
         border: solid;
         border-width: 1px;
         height: 300px;
-        width: 300px;
+        width: 350px;
         position: relative;
         box-shadow: 10px 10px 5px #888888;
         padding: 20px 10px;
-        margin: 10px
+        margin: 10px;
+        background-color: white;
     }
 
     .submitButton {
@@ -100,6 +101,10 @@
 
     .formItem {
         width: 90%;
+    }
+
+    body {
+        background: url('http://h1.ioliu.cn/bing/KingEider_ZH-CN3559595357_1920x1080.jpg?imageslim');
     }
 </style>
 
