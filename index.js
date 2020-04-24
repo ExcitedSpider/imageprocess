@@ -2,31 +2,65 @@ const fs = require('fs');
 const util = require('util');
 const readFile = util.promisify(fs.readFile);
 const unlink = util.promisify(fs.unlink);
-const { resize } = require('./image');
+const { resize, convert, watermark, sharpen, grayscale } = require('./image');
 
 module.exports.handler = async function (req, resp, context) {
 
-    switch (req.path) {
-        case '/api':
-            const {
-                url = 'https://dev-fc-application-template-cn-hangzhou.oss-cn-hangzhou.aliyuncs.com/Image-Resizer/example.png',
-                width = 200,
-                height
-            } = req.queries;
+    const {
+        url = 'https://dev-fc-application-template-cn-hangzhou.oss-cn-hangzhou.aliyuncs.com/Image-Resizer/example.png',
+        width = 200,
+        height,
+        target = 'png',
+        wartermark = 'desgin by QE',
+        wartermarksize = 1,
+        sharpenDegree = 3,
+    } = req.queries;
 
+    let output, respMime, respFile;
 
-            const { mimeType, filename } = await resize(url, width, height);
+    try {
+        switch (req.path) {
+            case '/api/resize':
+                output = await resize(url, width, height);
+                respMime = output.mimeType;
+                respFile = output.filename;
+                break;
 
-            resp.setHeader('content-type', mimeType);
-            resp.send(await readFile(filename));
-            await unlink(filename);
-            break;
+            case '/api/convert':
+                output = await convert(url, target);
+                respMime = output.mimeType;
+                respFile = output.filename;
+                break;
+            case '/api/wartermark':
+                output = await watermark(url, wartermark, wartermarksize);
+                respMime = output.mimeType;
+                respFile = output.filename;
+                break;
 
-        default:
-            resp.setStatusCode(200);
-            resp.setHeader('content-type', 'text/html')
-            resp.send(await readFile('./index.html'));
-            break;
+            case '/api/sharpen':
+                output = await sharpen(url, sharpenDegree);
+                respMime = output.mimeType;
+                respFile = output.filename;
+                break;
+
+            case '/api/grayscale':
+                output = await grayscale(url);
+                respMime = output.mimeType;
+                respFile = output.filename;
+                break;
+
+            default:
+                respFile = './index.html';
+                respMime = 'text/html'
+                break;
+        }
+
+        resp.setHeader('content-type', respMime);
+        resp.send(await readFile(respFile));
+        // await unlink(respFile);
+    } catch (error) {
+        resp.setStatusCode(500)
+        resp.send(JSON.stringify(error))
     }
 
 }

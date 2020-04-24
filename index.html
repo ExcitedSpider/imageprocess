@@ -5,27 +5,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>简历照片处理工具</title>
+    <title>照片处理工具</title>
 </head>
 
 <body>
-    <p>你好</p>
     <form>
-        <div>
-            <label for="name">照片url：</label>
-            <input type="text" name="url" id="url" required>
+        <div style="padding: 10px 20px;">
+            <label for="name">照片url：</label><br>
+            <input type="text" name="url" id="url" required class="formItem">
         </div>
-        <div>
-            <label for="name">宽度：</label>
-            <input type="number" name="width" id="width" required>
+        <div style="display: flex;">
+            <div>
+                <h2>大小调整</h2>
+                <div>
+                    <label for="name">宽度：</label>
+                    <input type="number" name="width" id="width">
+                </div>
+                <div>
+                    <label for="name">高度：</label>
+                    <input type="number" name="height" id="height">
+                </div>
+                <button class="submitButton" formaction="photoprocess/api/resize" class="formItem">图像处理</button>
+            </div>
+            <div>
+                <div>
+                    <h2>格式调整</h2>
+                    <label for="target">目标格式：</label>
+                    <select name="target" id="target" class="formItem">
+                        <option value="png">png</option>
+                        <option value="jpg">jpg</option>
+                        <option value="gif">gif</option>
+                        <option value="jpeg">jpeg</option>
+                    </select>
+                </div>
+                <button class="submitButton" formaction="photoprocess/api/convert">图像处理</button>
+            </div>
+            <div>
+                <h2>加水印</h2>
+                <div>
+                    <label for="target">水印文字：</label>
+                    <input type="text" name="wartermark" id="wartermark" class="formItem">
+                </div>
+                <div>
+                    <label for="target">水印大小：</label>
+                    <select name="wartermarksize" id="wartermarksize" class="formItem">
+                        <option value="1">中</option>
+                        <option value="2">大</option>
+                        <option value="3">特大</option>
+                    </select>
+                </div>
+                <button class="submitButton" formaction="photoprocess/api/wartermark">图像处理</button>
+            </div>
+            <div>
+                <div>
+                    <h2>锐化</h2>
+                    <label for="target">锐化程度</label>
+                    <select name="sharpenDegree" id="sharpenDegree" class="formItem">
+                        <option value="3">中</option>
+                        <option value="7">大</option>
+                        <option value="10">特大</option>
+                    </select>
+                </div>
+                <button class="submitButton" formaction="photoprocess/api/sharpen">图像处理</button>
+            </div>
+            <div>
+                <div>
+                    <h2>灰阶化</h2>
+                </div>
+                <button class="submitButton" formaction="photoprocess/api/grayscale">图像处理</button>
+            </div>
         </div>
-        <div>
-            <label for="name">高度：</label>
-            <input type="number" name="height" id="height" required>
-        </div>
-        <button formaction="photoprocess/api">按我</button>
+
     </form>
 
 </body>
+<style>
+    form>div>div {
+        border: solid;
+        border-width: 1px;
+        height: 300px;
+        width: 300px;
+        position: relative;
+        box-shadow: 10px 10px 5px #888888;
+        padding: 20px 10px;
+        margin: 10px
+    }
+
+    .submitButton {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .formItem {
+        width: 90%;
+    }
+</style>
 
 </html>

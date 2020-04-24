@@ -1,5 +1,8 @@
 ### 主页
 GET http://localhost:8000/2016-08-15/proxy/photoprocess/photoprocess
 
-### api
-GET http://localhost:8000/2016-08-15/proxy/photoprocess/photoprocess/api
+### resize
+GET http://localhost:8000/2016-08-15/proxy/photoprocess/photoprocess/api/resize
+
+### convert
+GET http://localhost:8000/2016-08-15/proxy/photoprocess/photoprocess/api/resize?target=jpg
