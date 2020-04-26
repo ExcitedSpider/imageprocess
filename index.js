@@ -4,6 +4,8 @@ const readFile = util.promisify(fs.readFile);
 const unlink = util.promisify(fs.unlink);
 const { resize, convert, watermark, sharpen, grayscale } = require('./image');
 
+const URL_PREFIX = '/photoprocess';
+
 module.exports.handler = async function (req, resp, context) {
 
     const {
@@ -17,33 +19,34 @@ module.exports.handler = async function (req, resp, context) {
     } = req.queries;
 
     let output, respMime, respFile;
+    console.log(req.path)
 
     try {
         switch (req.path) {
-            case '/api/resize':
+            case `${URL_PREFIX}/api/resize`:
                 output = await resize(url, width, height);
                 respMime = output.mimeType;
                 respFile = output.filename;
                 break;
 
-            case '/api/convert':
+            case `${URL_PREFIX}/api/convert`:
                 output = await convert(url, target);
                 respMime = output.mimeType;
                 respFile = output.filename;
                 break;
-            case '/api/wartermark':
+            case `${URL_PREFIX}/api/wartermark`:
                 output = await watermark(url, wartermark, wartermarksize);
                 respMime = output.mimeType;
                 respFile = output.filename;
                 break;
 
-            case '/api/sharpen':
+            case `${URL_PREFIX}/api/sharpen`:
                 output = await sharpen(url, sharpenDegree);
                 respMime = output.mimeType;
                 respFile = output.filename;
                 break;
 
-            case '/api/grayscale':
+            case `${URL_PREFIX}/api/grayscale`:
                 output = await grayscale(url);
                 respMime = output.mimeType;
                 respFile = output.filename;

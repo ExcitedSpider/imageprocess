@@ -10,18 +10,17 @@
 
 2. 进入文件夹，输入命令
     ```
-    $ fun local start
+    $ fun local start fc.qeservice.top
     ```
     如果有权限问题就加sudo
 
     它会自己下载一会runtime，最后正确运行的话会出现
     ```
     using template: template.yml
-    HttpTrigger httpTrigger of photoprocess/photoprocess was registered
-            url: http://localhost:8000/2016-08-15/proxy/photoprocess/photoprocess
+    CustomDomain fc.qeservice.top of photoprocess/photoprocess was registered
+            url: http://localhost:8000/photoprocess/
             methods: [ 'POST', 'GET' ]
             authType: ANONYMOUS
-
 
     function compute app listening on port 8000!
     ```
